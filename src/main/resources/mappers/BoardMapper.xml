@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+        <mapper namespace="org.zerock.board.mappers.BoardMapper">
+
+    <select id="select" resultType="org.zerock.board.dto.BoardDTO">
+    
+     <![CDATA[
+        select * from tbl_board where bno < 10
+     ]]>
+
+    </select>
+
+    <select id="selectOne" resultType="org.zerock.board.dto.BoardDTO">
+
+        select * from tbl_board where bno = #{bno}
+
+    </select>
+
+    <insert id="insert" parameterType="org.zerock.board.dto.RegBoardDTO">
+
+        insert into tbl_board (title, writer, content)
+        values (#{title}, #{writer}, #{content})
+
+    </insert>
+
+    <delete id="delete">
+        delete from tbl_board where bno = #{bno}
+    </delete>
+
+    <update id="update" parameterType="org.zerock.board.dto.UpdateBoardDTO">
+        update tbl_board 
+        set 
+        title = #{title},
+        contetn = #{content}
+        where bno = #{bno}
+    
+    </update>
+
+    </mapper>

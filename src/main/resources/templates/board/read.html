@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Board List</title>
+    <title>Board Read</title>
 </head>
 <body>
     <div layout:fragment="content">
@@ -23,15 +23,15 @@
                     <th class="text-secondary opacity-7"></th>
                   </tr>
                 </thead>
-                <h1>[[${list}]]</h1>
-                <tr th:each="list : ${list}">
-                  <td>1.</td>
-                  <td class = "boardList" th:data-tno="${list.bno}">[[${list.bno}]]</td>
-                </tr>
-                <a href = "/board/regist">등록</a>
+                <h1>[[${read}]]</h1>
+
               </table>
             </div>
           </div>
+
+
+          <a href="/board/modifyForm">수정</a>
+          <a href="/board/delete">삭제</a>
     </div>
 
     
