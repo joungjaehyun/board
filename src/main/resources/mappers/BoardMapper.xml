@@ -7,9 +7,11 @@
 
     <select id="select" resultType="org.zerock.board.dto.BoardDTO">
     
-     <![CDATA[
-        select * from tbl_board where bno < 10
-     ]]>
+     
+     select * from tbl_board
+            where bno > 0 
+            order by bno desc 
+            limit #{skip}, #{size}
 
     </select>
 
@@ -18,6 +20,15 @@
         select * from tbl_board where bno = #{bno}
 
     </select>
+
+    <select id="listCount" resultType="long">
+        select count(*) 
+        from 
+        (select bno from tbl_board 
+        where bno > 0 limit #{countEnd}) board
+    
+    </select>
+
 
     <insert id="insert" parameterType="org.zerock.board.dto.RegBoardDTO">
 
@@ -34,9 +45,8 @@
         update tbl_board 
         set 
         title = #{title},
-        contetn = #{content}
+        content = #{content}
         where bno = #{bno}
-    
     </update>
 
     </mapper>

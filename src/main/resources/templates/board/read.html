@@ -23,15 +23,19 @@
                     <th class="text-secondary opacity-7"></th>
                   </tr>
                 </thead>
+              <tbody>
+                <!--각 내용들 테이블화-->
                 <h1>[[${read}]]</h1>
+              </tbody>
+                
 
               </table>
             </div>
           </div>
 
 
-          <a href="/board/modifyForm">수정</a>
-          <a href="/board/delete">삭제</a>
+          <a th:href="@{/board/update/{bno}(bno=${read.bno})}">수정</a>
+          <a th:href="@{/board/delete/{bno}(bno=${read.bno})}">삭제</a>
     </div>
 
     

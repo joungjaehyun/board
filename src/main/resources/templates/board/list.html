@@ -14,23 +14,35 @@
               <table class="table align-items-center mb-0">
                 <thead>
                   <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Author</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">boardNum</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">title</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">writer
                     </th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                      Employed</th>
+                      regdate</th>
                     <th class="text-secondary opacity-7"></th>
                   </tr>
                 </thead>
-                <h1>[[${list}]]</h1>
                 <tr th:each="list : ${list}">
-                  <td>1.</td>
-                  <td class = "boardList" th:data-tno="${list.bno}">[[${list.bno}]]</td>
+                  <td class = "boardNum" th:data-tno="${list.bno}">[[${list.bno}]]</td>
+                  <td class = "boardTitle" th:data-title ="${list.title}">[[${list.title}]]</td>
+                  <td class = "boardWriter" th:data-writer ="${list.writer}">[[${list.writer}]]</td>
+                  <td class = "boarddate" th:data-dueDate ="${list.dueDate}">[[${list.dueDate}]]</td>
                 </tr>
                 <a href = "/board/regist">등록</a>
               </table>
             </div>
+            <!-- 페이징용 div actionForm 및 script-->
+            <div class="card-footer clearfix">
+              <ul class="pagination pagination-sm m-0 float-right todoUL">
+                <li class="page-item"><a class="page-link" href="10">&laquo;</a></li>
+                <li class="page-item"><a class="page-link" href="11">11</a></li>
+                <li class="page-item"><a class="page-link" href="12">12</a></li>
+                <li class="page-item"><a class="page-link" href="13">13</a></li>
+                <li class="page-item"><a class="page-link" href="21">&raquo;</a></li>
+              </ul>
+            </div>
+
           </div>
     </div>
 

@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.zerock.board.dto.BoardDTO;
+import org.zerock.board.dto.PageRequestDTO;
+import org.zerock.board.dto.PageResponseDTO;
 import org.zerock.board.dto.RegBoardDTO;
+import org.zerock.board.dto.UpdateBoardDTO;
 import org.zerock.board.service.BoardService;
+
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -26,12 +31,12 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public void boardList(Model model) {
+    public void boardList(PageRequestDTO pageRequestDTO, Model model) {
 
-        // List<BoardDTO> list 선언
-        List<BoardDTO> list = boardService.getList();
-        model.addAttribute("list", list);
+        PageResponseDTO<BoardDTO> responseDTO 
+        = boardService.getList(pageRequestDTO);
 
+        //model.addAttribute("list", responseDTO);
         log.info("boardList............");
     }
 
@@ -60,9 +65,43 @@ public class BoardController {
     ){
         log.info("regist");
         log.info(board);
-        
+        boardService.regOne(board);
+
+        log.info("regist success : " + boardService.regOne(board));
+        return "redirect:/board/list";
+    }
+
+    @GetMapping("/delete/{bno}")
+    public String delete(@PathVariable("bno") int bno){
+
+        boardService.delOne(bno);
+        log.info("delete success");
 
         return "redirect:/board/list";
     }
+
+    @GetMapping("/update/{bno}")
+    public String updateGet(@PathVariable("bno") int bno, Model model){
+
+        BoardDTO readData = boardService.getOne(bno);
+        log.info(readData);
+        log.info("updateForm.....");
+        
+        model.addAttribute("view", readData);
+
+
+        return "/board/update";
+        
+    }
+
+    @PostMapping("/update/{bno}")
+    public String update(@PathVariable("bno") int bno,
+                        UpdateBoardDTO updateData){
+        log.info(updateData);
+        boardService.updateOne(updateData);
+        log.info("update Success");
+        return "redirect:/board/list";
+    }
+
 
 }

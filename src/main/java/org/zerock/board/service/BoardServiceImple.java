@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.zerock.board.dto.BoardDTO;
+import org.zerock.board.dto.PageRequestDTO;
+import org.zerock.board.dto.PageResponseDTO;
+import org.zerock.board.dto.RegBoardDTO;
+import org.zerock.board.dto.UpdateBoardDTO;
 import org.zerock.board.mappers.BoardMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -17,11 +21,15 @@ public class BoardServiceImple implements BoardService{
     private final BoardMapper boardMapper;
 
     @Override
-    public List<BoardDTO> getList() {
+    public PageResponseDTO<BoardDTO> getList(PageRequestDTO pageRequestDTO) {
         
-        List<BoardDTO> list = boardMapper.select();
+        List<BoardDTO> list = boardMapper.select(pageRequestDTO);
+        long total = boardMapper.listCount(pageRequestDTO);
 
-        return list;
+        return PageResponseDTO.<BoardDTO>withAll()
+        .list(list)
+        .total(total)
+        .build();
     }
 
     @Override
@@ -30,6 +38,24 @@ public class BoardServiceImple implements BoardService{
         BoardDTO one = boardMapper.selectOne(bno);
 
         return one;
+    }
+
+    @Override
+    public int regOne(RegBoardDTO regBoardDTO) {
+      
+        return boardMapper.insert(regBoardDTO);
+    }
+
+    @Override
+    public int delOne(int bno) {
+        
+        return boardMapper.delete(bno);
+    }
+
+    @Override
+    public int updateOne(UpdateBoardDTO updateBoardDTO) {
+        
+        return boardMapper.update(updateBoardDTO);
     }
 
    
