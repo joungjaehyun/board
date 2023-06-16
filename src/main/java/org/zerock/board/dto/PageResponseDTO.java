@@ -10,12 +10,12 @@ public class PageResponseDTO<E> {
     
     private List<E> list;
 
-    private long total;
+    private long totalPage;
 
     @Builder(builderMethodName = "withAll")
-    public PageResponseDTO(List<E> list, long total) {
+    public PageResponseDTO(List<E> list, long totalPage) {
 
         this.list = list;
-        this.total = total;
+        this.totalPage = totalPage;
     }
 }

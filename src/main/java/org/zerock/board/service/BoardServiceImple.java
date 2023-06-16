@@ -15,7 +15,6 @@ import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class BoardServiceImple implements BoardService{
 
     private final BoardMapper boardMapper;
@@ -28,7 +27,7 @@ public class BoardServiceImple implements BoardService{
 
         return PageResponseDTO.<BoardDTO>withAll()
         .list(list)
-        .total(total)
+        .totalPage(total)
         .build();
     }
 

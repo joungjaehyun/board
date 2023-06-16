@@ -11,7 +11,7 @@
     <div layout:fragment="content">
         <div class="card-body px-0 pt-0 pb-2">
             <div class="table-responsive p-0">
-              <table class="table align-items-center mb-0">
+              <table class="table align-items-center mb-0 boardTable">
                 <thead>
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">boardNum</th>
@@ -23,18 +23,18 @@
                     <th class="text-secondary opacity-7"></th>
                   </tr>
                 </thead>
-                <tr th:each="list : ${list}">
-                  <td class = "boardNum" th:data-tno="${list.bno}">[[${list.bno}]]</td>
-                  <td class = "boardTitle" th:data-title ="${list.title}">[[${list.title}]]</td>
-                  <td class = "boardWriter" th:data-writer ="${list.writer}">[[${list.writer}]]</td>
-                  <td class = "boarddate" th:data-dueDate ="${list.dueDate}">[[${list.dueDate}]]</td>
+                <tr th:each="list :${pageResponseDTO.list}">
+                  <td class = "boardNum" >[[${list.bno}]]</td>
+                  <td class = "boardTitle" th:data-bno="${list.bno}" >[[${list.title}]]</td>
+                  <td class = "boardWriter" >[[${list.writer}]]</td>
+                  <td class = "boarddate" >[[${list.dueDate}]]</td>
                 </tr>
                 <a href = "/board/regist">등록</a>
               </table>
             </div>
             <!-- 페이징용 div actionForm 및 script-->
             <div class="card-footer clearfix">
-              <ul class="pagination pagination-sm m-0 float-right todoUL">
+              <ul class="pagination pagination-sm m-0 float-right boardUL">
                 <li class="page-item"><a class="page-link" href="10">&laquo;</a></li>
                 <li class="page-item"><a class="page-link" href="11">11</a></li>
                 <li class="page-item"><a class="page-link" href="12">12</a></li>
@@ -42,9 +42,66 @@
                 <li class="page-item"><a class="page-link" href="21">&raquo;</a></li>
               </ul>
             </div>
-
           </div>
+              <!-- /.card -->
+          <form class="actionForm" action="/board/list" method="get">
+            <input type="hidden" name="page" value="1">
+            <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
+          </form>
+
+
+          <script src = "/js/pageUtil.js"></script>
     </div>
+
+    <script layout:fragment="script" th:inline="javascript">
+
+      const actionForm = document.querySelector(".actionForm")
+      const pageObj = actionForm.querySelector("input[name='page']")
+      const boardUL = document.querySelector(".boardUL")
+
+      boardUL.addEventListener("click", (e) =>{
+        e.preventDefault()
+        e.stopPropagation()
+
+        const target = e.target
+        const pageNum = target.getAttribute("href")
+
+        pageObj.value = pageNum
+        actionForm.setAttribute("action",`/board/list`)
+
+
+      },false)
+
+      const {page,size} = [[${pageRequestDTO}]]
+
+      console.log(page,size)
+
+      const {totalPage} = [[${pageResponseDTO}]]
+
+      console.log("totalPage:" + totalPage)
+
+      const pageLIStr = makePages(page, size, totalPage)
+      boardUL.innerHTML = pageLIStr
+
+      const boardTable = document.querySelector(".boardTable")
+      boardTable.addEventListener("click", (e) => {
+
+        const target = e.target
+        if(!target.getAttribute("data-bno")){
+          return
+        }
+        const tno = target.getAttribute("data-bno")
+
+        console.log(tno)
+
+        actionForm.setAttribute("action", `/board/read/${bno}`)
+        actionForm.submit()
+
+      },false)
+
+
+
+    </script>
 
     
 </body>

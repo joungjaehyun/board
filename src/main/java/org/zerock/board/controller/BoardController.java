@@ -17,8 +17,6 @@ import org.zerock.board.dto.RegBoardDTO;
 import org.zerock.board.dto.UpdateBoardDTO;
 import org.zerock.board.service.BoardService;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -36,7 +34,7 @@ public class BoardController {
         PageResponseDTO<BoardDTO> responseDTO 
         = boardService.getList(pageRequestDTO);
 
-        //model.addAttribute("list", responseDTO);
+        model.addAttribute("pageResponseDTO", responseDTO);
         log.info("boardList............");
     }
 
